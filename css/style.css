@@ -1,0 +1,192 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: currentColor;
+}
+
+:root {
+  --font-size-5xl: 3.815rem;
+  --font-size-4xl: 3.052rem;
+  --font-size-3xl: 2.441rem;
+  --font-size-2xl: 1.953rem;
+  --font-size-xl: 1.563rem;
+  --font-size-lg: 1.25rem;
+  --font-size-md: 1rem;
+  --font-size-sm: 0.8rem;
+
+  --font-family: "Google Sans Flex", sans-serif;
+
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  --line-height-title: 1;
+  --line-height-body: 1.5;
+
+  --color-background: #f7e9db;
+  --color-text: #231a0e;
+  --color-text-muted: #3e301d;
+  --color-grid: #b39060;
+
+  --color-spring: #b3bf56;
+  --color-summer: #f1bfb6;
+  --color-fall: #e7c86e;
+  --color-winter: #98c0c7;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 87.5,
+    "GRAD" 0,
+    "ROND" 100;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-title);
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+main {
+  margin-block: 4rem;
+}
+
+article {
+  width: min(100% - 2rem, 90rem);
+  margin-inline: auto;
+  display: grid;
+  gap: 4rem;
+}
+
+@media (width > 1040px) {
+  /* https://css-tip.com/responsive-hexagon-grid/ */
+  .grid-outer {
+    --s: 320px; /* size of the shape */
+    --r: 1.15; /* ratio */
+    --mv: 4px; /* vertical margin  */
+    /* clip-path parametres*/
+    --h: 0.5;
+    --v: 0.25;
+    /* You don't need to touch the below */
+    --hc: calc(clamp(0, var(--h), 0.5) * var(--s));
+    --vc: calc(clamp(0, var(--v), 0.5) * var(--s) * var(--r));
+    --mh: calc(
+      var(--mv) + (var(--s) - 2 * var(--hc)) / 2
+    ); /* horizontal margin */
+    --f: calc(2 * var(--s) * var(--r) + 4 * var(--mv) - 2 * var(--vc) - 2px);
+    /**/
+    display: grid;
+    grid-template-columns: repeat(auto-fit, calc(var(--s) + 2 * var(--mh)));
+    justify-content: center;
+  }
+
+  .grid-inner {
+    font-size: 0;
+    padding-bottom: calc(var(--s) * var(--r) + var(--mv));
+    grid-column: 1/-1;
+  }
+
+  .grid-inner::before {
+    content: "";
+    width: calc(var(--s) / 2 + var(--mh));
+    float: left;
+    height: 135%;
+    shape-outside: repeating-linear-gradient(
+      #0000 0 calc(var(--f) - 2px),
+      #000 0 var(--f)
+    );
+  }
+
+  .grid-inner > div {
+    width: var(--s);
+    margin: var(--mv) var(--mh);
+    height: calc(var(--s) * var(--r));
+    display: inline-grid; /* or inline-grid, inline-flex, etc */
+    clip-path: polygon(
+      var(--hc) 0,
+      calc(100% - var(--hc)) 0,
+      100% var(--vc),
+      100% calc(100% - var(--vc)),
+      calc(100% - var(--hc)) 100%,
+      var(--hc) 100%,
+      0 calc(100% - var(--vc)),
+      0 var(--vc)
+    );
+    margin-bottom: calc(var(--mv) - var(--vc));
+    place-items: center;
+  }
+}
+
+@media (width <= 1040px) {
+  .grid-inner {
+    --s: 280px;
+    --gap: 24px;
+
+    display: grid;
+    justify-content: center;
+    grid-gap: var(--gap);
+    grid-template-columns: repeat(auto-fit, var(--s));
+  }
+
+  .grid-inner > div {
+    width: var(--s);
+    height: var(--s);
+    display: grid;
+    place-items: center;
+  }
+}
+
+.chart {
+  position: relative;
+}
+
+.chart-components > svg,
+.chart > svg {
+  position: absolute;
+}
+
+.chart,
+.chart-components {
+  font-size: var(--font-size-sm);
+}
+
+.chart-components .ticks {
+  stroke: var(--color-grid);
+}
+
+.chart-components .month-labels,
+.chart-components .season-labels {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  fill: var(--color-text-muted);
+}
+
+.chart .title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
