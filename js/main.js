@@ -39,7 +39,7 @@ d3.csv("data/data.csv").then((csv) => {
   const aScale = d3
     .scaleBand()
     .domain(months.map((d) => d.value))
-    .range([0, 2 * Math.PI]);
+    .range([(-1 / 12) * Math.PI, 2 * Math.PI - (1 / 12) * Math.PI]);
 
   const radToDeg = (rad) => (rad / Math.PI) * 180 + 90;
 
